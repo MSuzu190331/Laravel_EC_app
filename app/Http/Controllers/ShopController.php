@@ -10,14 +10,14 @@ class ShopController extends Controller
 {
     public function index() 
     {
-        $stocks = Stock::Paginate(6); 
+        $stocks = Stock::Paginate(6);
         return view('shop', compact('stocks'));  
     }
 
     public function myCart(Cart $cart) 
     {
         $mycarts = $cart->showCart();
-        return view('mycart', compact('mycarts')); 
+        return view('mycart', compact('mycarts'));
     }
 
     public function addMyCart(Request $request, Cart $cart) 

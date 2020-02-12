@@ -17,7 +17,7 @@
                             {{ number_format($mycart->stock->fee )}}円<br>
                                 <img src="/image/{{ $mycart->stock->imgpath }}" alt="" class="incart" >
                                 <br>
-
+                                
                                 <form action="/cartdelete" method="post">
                                   @csrf
                                   <input type="hidden" name="stock_id" value="{{ $mycart->stock->id }}">
