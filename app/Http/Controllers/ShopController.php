@@ -5,6 +5,7 @@ use App\Models\Stock;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ShopController extends Controller
 {
@@ -16,23 +17,28 @@ class ShopController extends Controller
 
     public function myCart(Cart $cart) 
     {
-        $mycarts = $cart->showCart();
-        return view('mycart', compact('mycarts'));
+        $data = $cart->showCart();
+        return view('mycart',$data);
     }
 
     public function addMyCart(Request $request, Cart $cart) 
     {
         $stock_id = $request->stock_id;
         $message = $cart->addCart($stock_id);
-        $mycarts = $cart->showCart();
-        return view('mycart',compact('mycarts', 'message'));
+        $data = $cart->showCart();
+        return view('mycart',$data)->with('message',$message);
     }
 
     public function deleteMyCart(Request $request, Cart $cart)
     {
         $stock_id = $request->stock_id;
         $message = $cart->daleteCart($stock_id);
-        $mycarts = $cart->showCart();
-        return view('mycart',compact('mycarts', 'message'));
+        $data = $cart->showCart();
+        return view('mycart',$data)->with('message',$message);
+    }
+
+    public function checkout(Cart $cart)
+    {
+        return view('checkout');
     }
 }
