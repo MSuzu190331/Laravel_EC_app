@@ -21,7 +21,16 @@ class Cart extends Model
     public function showCart()
     {
       $user_id = Auth::id();
-      return $this->where('user_id',$user_id)->get();
+      $data['mycarts'] = $this->where('user_id',$user_id)->get();
+
+      $data['count']=0;
+      $data['sum']=0;
+      
+      foreach($data['mycarts'] as $mycart){
+          $data['count']++;
+          $data['sum'] += $mycart->stock->fee;
+      }
+      return $data;
     }
 
     // カートに商品を加える時の処理
@@ -44,10 +53,11 @@ class Cart extends Model
       $user_id = Auth::id();
       if (Cart::where('user_id', $user_id)->where('stock_id', $stock_id)->delete()) {
         $message = '商品をカートから削除しました';
-        return $message;
+        
       } else {
         $message = 'エラー';
       }
+      return $message;
     }
 
 }

@@ -11,6 +11,8 @@
                 <p class="text-center">{{ $message ?? '' }}</p><br>
                 <div class="my_cart">
 
+                @if($mycarts->isNotEmpty()) 
+
                     @foreach($mycarts as $mycart)
                         <div class="mycart_box">
                             {{ $mycart->stock->name }}<br>
@@ -25,8 +27,19 @@
                                 </form>
                         </div>
                     @endforeach
-
                 </div>
+                <div class="text-center p-2">
+                  個数：{{$count}}個<br>
+                    <p style="font-size:1.2em; font-weight:bold;">合計金額:{{number_format($sum)}}円</p>  
+                </div>  
+                <form action="/checkout" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-lg text-center buy-btn" >購入する</button>
+                </form>
+
+                @else
+                  <p class="text-center">カートはからっぽです。</p>
+                @endif
 
                 <a href="/">商品一覧へ</a>
             </div>
