@@ -51,13 +51,23 @@ class Cart extends Model
     public function daleteCart($stock_id)
     {
       $user_id = Auth::id();
-      if (Cart::where('user_id', $user_id)->where('stock_id', $stock_id)->delete()) {
+      if ($this->where('user_id', $user_id)->where('stock_id', $stock_id)->delete()) {
         $message = '商品をカートから削除しました';
         
       } else {
         $message = 'エラー';
       }
       return $message;
+    }
+
+    // 購入後にカートの中身削除
+    public function checkoutCart()
+    {
+      $user_id = Auth::id(); 
+      $checkout_items=$this->where('user_id', $user_id)->get();
+      $this->where('user_id', $user_id)->delete();
+
+      return $checkout_items;  
     }
 
 }
