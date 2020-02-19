@@ -16,10 +16,15 @@
 // });
 
 Route::get('/', 'ShopController@index');
-Route::get('/mycart', 'ShopController@myCart')->middleware('auth');
-Route::post('/checkout', 'ShopController@checkout');
-Route::post('/mycart', 'ShopController@addMyCart')->middleware('auth');
-Route::post('/cartdelete', 'ShopController@deleteMyCart')->middleware('auth');
+
+Route::group(['middleware' => ['auth']], function () {
+
+  Route::get('/mycart', 'ShopController@myCart');
+  Route::post('/checkout', 'ShopController@checkout');
+  Route::post('/mycart', 'ShopController@addMyCart');
+  Route::post('/cartdelete', 'ShopController@deleteMyCart');
+  
+});
 
 Auth::routes();
 
